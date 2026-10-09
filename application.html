@@ -1,348 +1,283 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Funding Application | Student Aid Portal</title>
+  <title>Student Funding Application | Student Aid Portal</title>
   <link rel="stylesheet" href="css/style.css">
-
   <style>
-    .application-page {
-      min-height: 100vh;
-      padding: 45px 20px;
-      background: #f3f6fb;
-    }
-
     .application-container {
-      max-width: 850px;
-      margin: auto;
+      max-width: 760px;
+      margin: 45px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.09);
     }
-
-    .application-header {
-      margin-bottom: 30px;
+    .application-container h1 { color: #173b70; }
+    .notice {
+      padding: 14px;
+      background: #eef6ff;
+      border-left: 4px solid #2463a6;
+      margin: 20px 0;
+      line-height: 1.6;
     }
-
-    .application-header h1 {
-      color: #102b46;
-      font-size: 36px;
-    }
-
     .progress-track {
       height: 8px;
-      margin: 25px 0;
+      background: #e5e7eb;
+      border-radius: 10px;
+      margin: 20px 0 30px;
       overflow: hidden;
-      border-radius: 20px;
-      background: #dce5f0;
     }
-
     .progress-bar {
-      width: 25%;
       height: 100%;
-      background: #175bd6;
+      width: 33.33%;
+      background: #2463a6;
       transition: width .2s;
     }
-
-    .form-card {
-      padding: 35px;
-      border: 1px solid #e0e7ef;
-      border-radius: 14px;
-      background: white;
-      box-shadow: 0 10px 35px #102b4610;
-    }
-
-    .form-step h2 {
-      color: #102b46;
-    }
-
-    .form-step label {
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+    .form-group { margin: 18px 0; }
+    .form-group label {
       display: block;
-      margin: 18px 0 7px;
-      font-weight: 700;
-      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 7px;
     }
-
-    .form-step input,
-    .form-step select,
-    .form-step textarea {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      box-sizing: border-box;
       width: 100%;
-      min-height: 45px;
-      padding: 11px;
+      padding: 12px;
       border: 1px solid #cbd5e1;
-      border-radius: 7px;
+      border-radius: 6px;
       font: inherit;
     }
-
-    .form-step textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .form-step [hidden] {
-      display: none !important;
-    }
-
-    .form-navigation {
+    .form-group textarea { min-height: 100px; }
+    .form-buttons {
       display: flex;
-      justify-content: space-between;
       gap: 12px;
-      margin-top: 30px;
+      justify-content: space-between;
+      margin-top: 25px;
     }
-
-    .form-message {
-      margin-top: 20px;
-      font-weight: 600;
+    .form-buttons button {
+      padding: 12px 22px;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
     }
-
-    .privacy-notice {
-      margin-top: 22px;
-      padding: 15px;
+    .next-btn, .submit-btn { background: #173b70; color: white; }
+    .back-btn { background: #e5e7eb; color: #111827; }
+    .field-error { color: #b91c1c; }
+    .success-message {
+      padding: 18px;
+      background: #ecfdf5;
+      color: #065f46;
       border-radius: 8px;
-      background: #edf4ff;
-      color: #28496d;
-      font-size: 13px;
     }
-
-    @media (max-width: 600px) {
-      .form-card {
-        padding: 22px;
-      }
-
-      .application-header h1 {
-        font-size: 29px;
-      }
+    @media(max-width:600px) {
+      .application-container { margin: 20px 12px; padding: 20px; }
     }
   </style>
 </head>
-
 <body>
-  <div class="notice">
-    Independent education funding service — not a government website.
-  </div>
+  <main class="application-container">
+    <p><a href="index.html">← Back to Student Aid Portal</a></p>
 
-  <main class="application-page">
-    <div class="application-container">
+    <h1>Student Funding Application</h1>
+    <p>Apply for funding opportunities offered through our independent student aid platform.</p>
 
-      <div class="application-header">
-        <a class="logo" href="index.html">
-          <span class="logo-icon">S</span>
-          <span>Student Aid Portal</span>
-        </a>
+    <div class="notice">
+      <strong>Independent platform:</strong> This is not the official FAFSA application
+      and is not affiliated with the U.S. Department of Education. Do not enter your
+      Social Security number, tax records, government account password, or official FAFSA login details.
+    </div>
 
-        <h1>Education Funding Application</h1>
+    <div class="progress-track" aria-label="Application progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <p id="stepLabel">Step 1 of 3: Student information</p>
 
-        <p>
-          Apply for funding opportunities offered through this independent
-          portal. This is not the official FAFSA application.
-        </p>
+    <form id="fundingForm">
+      <section class="form-step active">
+        <h2>1. Student information</h2>
 
-        <div class="progress-track">
-          <div class="progress-bar" id="progressBar"></div>
+        <div class="form-group">
+          <label for="fullName">Full name *</label>
+          <input id="fullName" name="fullName" autocomplete="name" required maxlength="120">
         </div>
 
-        <p id="stepIndicator">Step 1 of 4</p>
-      </div>
-
-      <form id="fundingApplication" class="form-card">
-
-        <!-- STEP 1 -->
-        <section class="form-step" data-step="1">
-          <h2>1. Applicant Information</h2>
-          <p>Enter the contact information needed for this funding application.</p>
-
-          <label for="fullName">Full name *</label>
-          <input
-            id="fullName"
-            name="fullName"
-            autocomplete="name"
-            required
-            maxlength="100"
-          >
-
+        <div class="form-group">
           <label for="email">Email address *</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-            maxlength="254"
-          >
+          <input id="email" name="email" type="email" autocomplete="email" required maxlength="254">
+        </div>
 
+        <div class="form-group">
           <label for="country">Country of residence *</label>
-          <input
-            id="country"
-            name="country"
-            required
-            maxlength="100"
-          >
+          <input id="country" name="country" required maxlength="100">
+        </div>
 
-          <label for="educationLevel">Current education level *</label>
-          <select id="educationLevel" name="educationLevel" required>
-            <option value="">Select an option</option>
-            <option>Secondary school</option>
+        <div class="form-group">
+          <label for="education">Education level *</label>
+          <select id="education" name="educationLevel" required>
+            <option value="">Select education level</option>
+            <option>High school</option>
             <option>Undergraduate</option>
             <option>Graduate</option>
-            <option>Vocational or technical training</option>
+            <option>Vocational or technical</option>
             <option>Other</option>
           </select>
-        </section>
+        </div>
+      </section>
 
-        <!-- STEP 2 -->
-        <section class="form-step" data-step="2" hidden>
-          <h2>2. Education Details</h2>
-          <p>Tell us about your education plans.</p>
+      <section class="form-step">
+        <h2>2. Education and funding</h2>
 
+        <div class="form-group">
           <label for="institution">School or institution *</label>
-          <input
-            id="institution"
-            name="institution"
-            required
-            maxlength="150"
-          >
-
-          <label for="program">Course or program *</label>
-          <input
-            id="program"
-            name="program"
-            required
-            maxlength="150"
-          >
-
-          <label for="studyStart">Expected start date</label>
-          <input
-            id="studyStart"
-            name="studyStart"
-            type="date"
-          >
-
-          <label for="fundingType">Funding opportunity *</label>
-          <select id="fundingType" name="fundingType" required>
-            <option value="">Select an option</option>
-            <option value="scholarship">Scholarship</option>
-            <option value="education-grant">Education grant</option>
-            <option value="tuition-support">Tuition assistance</option>
-            <option value="other">Other funding</option>
-          </select>
-        </section>
-
-        <!-- STEP 3 -->
-        <section class="form-step" data-step="3" hidden>
-          <h2>3. Funding Request</h2>
-          <p>Provide a summary of your education funding needs.</p>
-
-          <label for="requestedAmount">Amount requested (USD) *</label>
-          <input
-            id="requestedAmount"
-            name="requestedAmount"
-            type="number"
-            min="1"
-            max="1000000"
-            step="0.01"
-            required
-          >
-
-          <label for="fundingPurpose">How will the funding help you? *</label>
-          <textarea
-            id="fundingPurpose"
-            name="fundingPurpose"
-            minlength="20"
-            maxlength="2000"
-            required
-          ></textarea>
-
-          <label for="additionalInfo">Additional information (optional)</label>
-          <textarea
-            id="additionalInfo"
-            name="additionalInfo"
-            maxlength="2000"
-          ></textarea>
-        </section>
-
-        <!-- STEP 4 -->
-        <section class="form-step" data-step="4" hidden>
-          <h2>4. Review and Consent</h2>
-
-          <p>
-            Review your answers before submitting. This application is for
-            funding programs administered by this independent portal.
-          </p>
-
-          <label>
-            <input
-              type="checkbox"
-              name="informationAccurate"
-              required
-              style="width:auto; min-height:auto;"
-            >
-            I confirm that the information I supplied is accurate.
-          </label>
-
-          <label>
-            <input
-              type="checkbox"
-              name="privacyConsent"
-              required
-              style="width:auto; min-height:auto;"
-            >
-            I have read the privacy information and consent to the use of my
-            information to process this funding application.
-          </label>
-
-          <div class="privacy-notice">
-            Do not enter StudentAid.gov passwords, Social Security numbers,
-            tax records, bank passwords, or official FAFSA credentials here.
-            Only submit information needed for the funding program identified
-            by this portal.
-          </div>
-
-          <div id="reviewSummary"></div>
-        </section>
-
-        <div class="form-navigation">
-          <button
-            class="button secondary"
-            type="button"
-            id="previousButton"
-            hidden
-          >
-            Back
-          </button>
-
-          <button
-            class="button primary"
-            type="button"
-            id="nextButton"
-          >
-            Continue
-          </button>
-
-          <button
-            class="button primary"
-            type="submit"
-            id="submitButton"
-            hidden
-          >
-            Submit Application
-          </button>
+          <input id="institution" name="institution" required maxlength="200">
         </div>
 
-        <p
-          class="form-message"
-          id="formMessage"
-          role="status"
-          aria-live="polite"
-        ></p>
-      </form>
+        <div class="form-group">
+          <label for="program">Program or field of study *</label>
+          <input id="program" name="program" required maxlength="200">
+        </div>
 
-      <p>
-        <a href="index.html">← Return to Student Aid Portal</a>
-      </p>
+        <div class="form-group">
+          <label for="studyStart">Expected study start date</label>
+          <input id="studyStart" name="studyStart" type="date">
+        </div>
 
-    </div>
+        <div class="form-group">
+          <label for="fundingType">Funding type *</label>
+          <select id="fundingType" name="fundingType" required>
+            <option value="">Choose funding type</option>
+            <option>Scholarship</option>
+            <option>Education grant</option>
+            <option>Tuition assistance</option>
+            <option>Other student funding</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Estimated funding requested (USD) *</label>
+          <input id="amount" name="requestedAmount" type="number" min="1" max="1000000" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+          <label for="purpose">Briefly explain what the funding will cover *</label>
+          <textarea id="purpose" name="fundingPurpose" required maxlength="2000"></textarea>
+        </div>
+      </section>
+
+      <section class="form-step">
+        <h2>3. Review and consent</h2>
+        <p>Please review your information before submitting.</p>
+        <div id="review"></div>
+
+        <div class="form-group">
+          <label for="additionalInfo">Additional information (optional)</label>
+          <textarea id="additionalInfo" name="additionalInfo" maxlength="2000"
+            placeholder="Do not include passwords, Social Security numbers, or tax records."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="consent" required style="width:auto">
+            I confirm that the information I provided is accurate and agree that this independent
+            platform may use it to review my funding inquiry. *
+          </label>
+        </div>
+        <p id="formMessage" role="status" aria-live="polite"></p>
+      </section>
+
+      <div class="form-buttons">
+        <button type="button" class="back-btn" id="backBtn" hidden>Back</button>
+        <button type="button" class="next-btn" id="nextBtn">Continue</button>
+        <button type="submit" class="submit-btn" id="submitBtn" hidden>Submit application</button>
+      </div>
+    </form>
   </main>
 
-  <script src="js/application.js"></script>
+  <script>
+    const form = document.getElementById('fundingForm');
+    const steps = [...document.querySelectorAll('.form-step')];
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressBar = document.getElementById('progressBar');
+    const stepLabel = document.getElementById('stepLabel');
+    const message = document.getElementById('formMessage');
+    let currentStep = 0;
+
+    function showStep(index) {
+      currentStep = index;
+      steps.forEach((step, i) => step.classList.toggle('active', i === index));
+      backBtn.hidden = index === 0;
+      nextBtn.hidden = index === steps.length - 1;
+      submitBtn.hidden = index !== steps.length - 1;
+      progressBar.style.width = ((index + 1) / steps.length * 100) + '%';
+      stepLabel.textContent = `Step ${index + 1} of ${steps.length}`;
+      message.textContent = '';
+
+      if (index === 2) buildReview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function stepIsValid() {
+      const fields = [...steps[currentStep].querySelectorAll('input, select, textarea')];
+      for (const field of fields) {
+        if (field.type === 'checkbox' && !field.checked) {
+          field.reportValidity();
+          return false;
+        }
+        if (field.type !== 'checkbox' && !field.checkValidity()) {
+          field.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function buildReview() {
+      const fields = [
+        ['Full name', 'fullName'],
+        ['Email', 'email'],
+        ['Country', 'country'],
+        ['Education level', 'education'],
+        ['Institution', 'institution'],
+        ['Program', 'program'],
+        ['Funding type', 'fundingType'],
+        ['Requested amount (USD)', 'amount'],
+        ['Funding purpose', 'purpose']
+      ];
+      const review = document.getElementById('review');
+      review.replaceChildren();
+
+      for (const [label, id] of fields) {
+        const row = document.createElement('p');
+        const strong = document.createElement('strong');
+        strong.textContent = label + ': ';
+        row.append(strong, document.createTextNode(document.getElementById(id).value));
+        review.appendChild(row);
+      }
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (stepIsValid()) showStep(currentStep + 1);
+    });
+
+    backBtn.addEventListener('click', () => showStep(currentStep - 1));
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!stepIsValid()) return;
+
+      message.textContent =
+        'The form is ready, but online submission has not been configured yet. Your information has not been sent or saved. Please connect a secure backend before accepting applications.';
+      message.className = 'success-message';
+    });
+  </script>
 </body>
 </html>
-```
