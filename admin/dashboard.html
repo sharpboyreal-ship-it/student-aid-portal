@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard | Student Aid Portal</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #172b4d;
+    }
+
+    header {
+      background: #173b70;
+      color: white;
+      padding: 22px;
+    }
+
+    header h1 { margin: 0 0 8px; }
+
+    .container {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 18px;
+    }
+
+    .notice {
+      padding: 16px;
+      border-radius: 8px;
+      background: #eaf2ff;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 3px 15px #173b7010;
+    }
+
+    .stat-number {
+      font-size: 30px;
+      font-weight: bold;
+      color: #173b70;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    input, select, button {
+      font: inherit;
+      padding: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+    }
+
+    button {
+      cursor: pointer;
+      background: #173b70;
+      color: white;
+      border: none;
+    }
+
+    button:disabled { opacity: .6; }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: white;
+      border-radius: 10px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 950px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 14px;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+
+    th { background: #edf2f9; }
+
+    #message {
+      padding: 12px 0;
+      line-height: 1.5;
+    }
+
+    .hidden { display: none !important; }
+
+    a { color: #dbeafe; }
+
+    @media(max-width:600px) {
+      header { padding: 18px; }
+      .container { margin-top: 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Student Aid Portal</h1>
+    <p>Administrator Dashboard</p>
+    <a href="../index.html">Return to homepage</a>
+  </header>
+
+  <main class="container">
+    <div class="notice">
+      <strong>Restricted area.</strong>
+      Only authorized administrators may access student application records.
+      Access is verified through Supabase authentication and the administrator role.
+    </div>
+
+    <p id="message" role="status" aria-live="polite">
+      Checking administrator access...
+    </p>
+
+    <section id="dashboard" class="hidden">
+      <div class="stats">
+        <div class="card">
+          <p>Total applications</p>
+          <div class="stat-number" id="totalCount">0</div>
+        </div>
+
+        <div class="card">
+          <p>Submitted</p>
+          <div class="stat-number" id="submittedCount">0</div>
+        </div>
+
+        <div class="card">
+          <p>Under review</p>
+          <div class="stat-number" id="reviewCount">0</div>
+        </div>
+
+        <div class="card">
+          <p>Approved</p>
+          <div class="stat-number" id="approvedCount">0</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search loaded applications"
+          aria-label="Search applications"
+        >
+
+        <select id="statusFilter" aria-label="Filter by status">
+          <option value="">All statuses</option>
+          <option value="submitted">Submitted</option>
+          <option value="under_review">Under review</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+
+        <button type="button" id="refreshButton">Refresh</button>
+        <button type="button" id="logoutButton">Log out</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Applicant</th>
+              <th>Email</th>
+              <th>Country</th>
+              <th>Institution</th>
+              <th>Program</th>
+              <th>Funding requested</th>
+              <th>Status</th>
+              <th>Submitted</th>
+            </tr>
+          </thead>
+
+          <tbody id="applicationsBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const message = document.getElementById("message");
+      const dashboard = document.getElementById("dashboard");
+      const body = document.getElementById("applicationsBody");
+
+      let applications = [];
+
+      function showMessage(text) {
+        message.textContent = text;
+      }
+
+      function addCell(row, value) {
+        const cell = document.createElement("td");
+        cell.textContent = value == null ? "" : String(value);
+        row.appendChild(cell);
+      }
+
+      function renderApplications() {
+        const search = document
+          .getElementById("searchInput")
+          .value.trim().toLowerCase();
+
+        const status = document.getElementById("statusFilter").value;
+
+        const filtered = applications.filter(app => {
+          const searchable = [
+            app.full_name,
+            app.email,
+            app.country,
+            app.institution,
+            app.program
+          ].join(" ").toLowerCase();
+
+          return searchable.includes(search) &&
+            (!status || app.status === status);
+        });
+
+        body.replaceChildren();
+
+        for (const app of filtered) {
+          const row = document.createElement("tr");
+
+          addCell(row, app.full_name);
+          addCell(row, app.email);
+          addCell(row, app.country);
+          addCell(row, app.institution);
+          addCell(row, app.program);
+
+          const amount = Number(app.requested_amount);
+          addCell(
+            row,
+            Number.isFinite(amount)
+              ? "USD " + amount.toLocaleString()
+              : "Not available"
+          );
+
+          addCell(row, app.status || "submitted");
+
+          addCell(
+            row,
+            app.submitted_at
+              ? new Date(app.submitted_at).toLocaleDateString()
+              : ""
+          );
+
+          body.appendChild(row);
+        }
+
+        if (filtered.length === 0) {
+          const row = document.createElement("tr");
+          const cell = document.createElement("td");
+          cell.colSpan = 8;
+          cell.textContent = "No matching applications found.";
+          row.appendChild(cell);
+          body.appendChild(row);
+        }
+      }
+
+      async function loadApplications() {
+        showMessage("Loading applications...");
+
+        const { data, error } = await window.supabaseClient
+          .from("funding_applications")
+          .select(
+            "full_name,email,country,institution,program,requested_amount,status,submitted_at"
+          )
+          .order("submitted_at", { ascending: false })
+          .limit(500);
+
+        if (error) {
+          console.error(error);
+          showMessage(
+            "Could not load applications. Check the administrator database permissions."
+          );
+          return;
+        }
+
+        applications = data || [];
+
+        document.getElementById("totalCount").textContent =
+          applications.length;
+
+        document.getElementById("submittedCount").textContent =
+          applications.filter(a => a.status === "submitted").length;
+
+        document.getElementById("reviewCount").textContent =
+          applications.filter(a => a.status === "under_review").length;
+
+        document.getElementById("approvedCount").textContent =
+          applications.filter(a => a.status === "approved").length;
+
+        renderApplications();
+        showMessage("Applications loaded.");
+      }
+
+      try {
+        if (!window.supabaseClient) {
+          throw new Error("Supabase connection is not configured.");
+        }
+
+        const { data: authData, error: authError } =
+          await window.supabaseClient.auth.getUser();
+
+        if (authError) throw authError;
+
+        const user = authData.user;
+
+        if (!user) {
+          showMessage("Please log in with an authorized administrator account.");
+          return;
+        }
+
+        const { data: profile, error: profileError } =
+          await window.supabaseClient
+            .from("profiles")
+            .select("role")
+            .eq("id", user.id)
+            .single();
+
+        if (profileError || !profile || profile.role !== "admin") {
+          showMessage("Access denied. An administrator account is required.");
+          return;
+        }
+
+        dashboard.classList.remove("hidden");
+
+        document.getElementById("refreshButton")
+          .addEventListener("click", loadApplications);
+
+        document.getElementById("searchInput")
+          .addEventListener("input", renderApplications);
+
+        document.getElementById("statusFilter")
+          .addEventListener("change", renderApplications);
+
+        document.getElementById("logoutButton")
+          .addEventListener("click", async () => {
+            await window.supabaseClient.auth.signOut();
+            window.location.href = "../login.html";
+          });
+
+        await loadApplications();
+
+      } catch (error) {
+        console.error(error);
+        showMessage(
+          "Unable to verify administrator access. Check the Supabase connection and profile settings."
+        );
+      }
+    });
+  </script>
+</body>
+</html>
