@@ -1,120 +1,39 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Log In | Student Aid Portal</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Login | Student Aid Portal</title>
   <link rel="stylesheet" href="css/style.css">
-
   <style>
-    .login-page {
-      min-height: 80vh;
-      display: grid;
-      place-items: center;
-      padding: 40px 20px;
-      background: #f3f7ff;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 430px;
-      padding: 35px;
-      border: 1px solid #e0e7ef;
-      border-radius: 16px;
-      background: white;
-      box-shadow: 0 15px 45px rgba(16, 43, 70, 0.08);
-    }
-
-    .login-card h1 {
-      color: #102b46;
-    }
-
-    .login-card label {
-      display: block;
-      margin: 18px 0 7px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .login-card button {
-      width: 100%;
-      margin-top: 22px;
-    }
-
-    .login-message {
-      margin-top: 15px;
-      font-size: 13px;
-    }
-
-    .login-card .back-link {
-      display: inline-block;
-      margin-top: 20px;
-    }
+    body{font-family:Arial,sans-serif;background:#f3f6fb;margin:0;color:#172b4d}
+    .card{max-width:440px;margin:55px auto;padding:30px;background:white;border-radius:14px;box-shadow:0 8px 30px #14294b18}
+    h1{color:#173b70}.muted{color:#526176;line-height:1.5}
+    label{display:block;font-weight:600;margin:18px 0 7px}
+    input{box-sizing:border-box;width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:7px;font-size:16px}
+    button{width:100%;margin-top:22px;padding:14px;border:0;border-radius:7px;background:#173b70;color:white;font-size:16px;cursor:pointer}
+    button:disabled{opacity:.6}a{color:#2058a5}#authMessage{line-height:1.5}
+    .notice{background:#eef6ff;padding:12px;border-radius:7px;font-size:14px;line-height:1.5}
   </style>
 </head>
-
 <body>
-  <div class="notice">
-    Independent education funding resource — not a government website.
-  </div>
-
-  <main class="login-page">
-    <section class="login-card">
-      <a class="logo" href="index.html">
-        <span class="logo-icon">S</span>
-        <span>Student Aid Portal</span>
-      </a>
-
-      <h1>Welcome back</h1>
-
-      <p>Log in to your Student Aid Portal account.</p>
-
-      <form id="loginForm">
-        <label for="email">Email address</label>
-        <input
-          type="email"
-          id="email"
-          autocomplete="email"
-          required
-          placeholder="you@example.com"
-        >
-
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          autocomplete="current-password"
-          required
-          placeholder="Enter your password"
-        >
-
-        <button class="button primary" type="submit">
-          LOG IN
-        </button>
-      </form>
-
-      <p id="loginMessage" class="login-message" aria-live="polite"></p>
-
-      <a class="back-link" href="index.html">← Back to homepage</a>
-    </section>
+  <main class="card">
+    <p><a href="index.html">← Student Aid Portal</a></p>
+    <h1>Welcome back</h1>
+    <p class="muted">Log in to your student funding account.</p>
+    <p class="notice">Independent platform. This login is not connected to your official FAFSA account.</p>
+    <form id="loginForm">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Log in</button>
+    </form>
+    <p id="authMessage" role="status" aria-live="polite"></p>
+    <p>New student? <a href="signup.html">Create an account</a></p>
   </main>
-
-  <script type="module">
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("loginMessage");
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      message.textContent =
-        "Account authentication is not configured yet. The next step is connecting secure authentication.";
-
-      message.style.color = "#175bd6";
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
 </body>
 </html>
-```

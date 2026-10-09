@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create Student Account | Student Aid Portal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body{font-family:Arial,sans-serif;background:#f3f6fb;margin:0;color:#172b4d}
+    .card{max-width:440px;margin:55px auto;padding:30px;background:white;border-radius:14px;box-shadow:0 8px 30px #14294b18}
+    h1{color:#173b70}.muted{color:#526176;line-height:1.5}
+    label{display:block;font-weight:600;margin:18px 0 7px}
+    input{box-sizing:border-box;width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:7px;font-size:16px}
+    button{width:100%;margin-top:22px;padding:14px;border:0;border-radius:7px;background:#173b70;color:white;font-size:16px;cursor:pointer}
+    button:disabled{opacity:.6}a{color:#2058a5}#authMessage{line-height:1.5}
+    .notice{background:#eef6ff;padding:12px;border-radius:7px;font-size:14px;line-height:1.5}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <p><a href="index.html">← Student Aid Portal</a></p>
+    <h1>Create your account</h1>
+    <p class="muted">Create an account to explore student funding opportunities.</p>
+    <p class="notice">This is an independent student funding platform, not the official FAFSA website. Never enter your FAFSA password or Social Security number here.</p>
+    <form id="signupForm">
+      <label for="fullName">Full name</label>
+      <input id="fullName" name="fullName" autocomplete="name" required maxlength="120">
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+      <button type="submit">Create account</button>
+    </form>
+    <p id="authMessage" role="status" aria-live="polite"></p>
+    <p>Already registered? <a href="login.html">Log in</a></p>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
