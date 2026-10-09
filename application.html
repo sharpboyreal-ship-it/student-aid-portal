@@ -269,15 +269,11 @@
     });
 
     backBtn.addEventListener('click', () => showStep(currentStep - 1));
-
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-      if (!stepIsValid()) return;
-
-      message.textContent =
-        'The form is ready, but online submission has not been configured yet. Your information has not been sent or saved. Please connect a secure backend before accepting applications.';
-      message.className = 'success-message';
-    });
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/application.js"></script>
+
 </body>
 </html>

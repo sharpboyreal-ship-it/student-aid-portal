@@ -1,112 +1,52 @@
-```javascript
-const form = document.getElementById("fundingApplication");
-const steps = [...document.querySelectorAll(".form-step")];
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("fundingForm");
+  if (!form) return;
 
-const progressBar = document.getElementById("progressBar");
-const stepIndicator = document.getElementById("stepIndicator");
-const previousButton = document.getElementById("previousButton");
-const nextButton = document.getElementById("nextButton");
-const submitButton = document.getElementById("submitButton");
-const formMessage = document.getElementById("formMessage");
-const reviewSummary = document.getElementById("reviewSummary");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-let currentStep = 0;
+    const message = document.getElementById("formMessage");
 
-function showStep(index) {
-  currentStep = index;
+    if (!form.reportValidity()) return;
 
-  steps.forEach((step, stepIndex) => {
-    step.hidden = stepIndex !== index;
-  });
-
-  progressBar.style.width =
-    `${((index + 1) / steps.length) * 100}%`;
-
-  stepIndicator.textContent =
-    `Step ${index + 1} of ${steps.length}`;
-
-  previousButton.hidden = index === 0;
-  nextButton.hidden = index === steps.length - 1;
-  submitButton.hidden = index !== steps.length - 1;
-
-  formMessage.textContent = "";
-
-  if (index === steps.length - 1) {
-    updateReview();
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function validateCurrentStep() {
-  const visibleStep = steps[currentStep];
-  const fields = [...visibleStep.querySelectorAll("input, select, textarea")];
-
-  for (const field of fields) {
-    if (!field.checkValidity()) {
-      field.reportValidity();
-      return false;
+    if (!window.supabaseClient) {
+      message.textContent =
+        "The database is not connected yet. Please try again later.";
+      return;
     }
-  }
 
-  return true;
-}
+    const data = new FormData(form);
 
-function updateReview() {
-  const fields = [
-    ["Full name", "fullName"],
-    ["Email", "email"],
-    ["Country", "country"],
-    ["Education level", "educationLevel"],
-    ["Institution", "institution"],
-    ["Program", "program"],
-    ["Funding type", "fundingType"],
-    ["Requested amount (USD)", "requestedAmount"]
-  ];
+    const application = {
+      full_name: data.get("fullName"),
+      email: data.get("email"),
+      country: data.get("country"),
+      education_level: data.get("educationLevel"),
+      institution: data.get("institution"),
+      program: data.get("program"),
+      study_start: data.get("studyStart") || null,
+      funding_type: data.get("fundingType"),
+      requested_amount: Number(data.get("requestedAmount")),
+      funding_purpose: data.get("fundingPurpose"),
+      additional_info: data.get("additionalInfo") || null
+    };
 
-  reviewSummary.replaceChildren();
+    message.textContent = "Submitting your application...";
 
-  const heading = document.createElement("h3");
-  heading.textContent = "Application summary";
-  reviewSummary.appendChild(heading);
+    try {
+      const { error } = await window.supabaseClient
+        .from("funding_applications")
+        .insert(application);
 
-  const list = document.createElement("dl");
+      if (error) throw error;
 
-  for (const [label, fieldName] of fields) {
-    const field = form.elements.namedItem(fieldName);
-
-    const term = document.createElement("dt");
-    term.textContent = label;
-
-    const value = document.createElement("dd");
-    value.textContent = field.value || "Not provided";
-
-    list.append(term, value);
-  }
-
-  reviewSummary.appendChild(list);
-}
-
-nextButton.addEventListener("click", () => {
-  if (!validateCurrentStep()) return;
-
-  showStep(Math.min(currentStep + 1, steps.length - 1));
+      message.textContent =
+        "Your application was submitted successfully!";
+      form.reset();
+    } catch (error) {
+      console.error("Application submission failed:", error);
+      message.textContent =
+        "Submission failed. Please check your account, database permissions, and connection.";
+    }
+  });
 });
-
-previousButton.addEventListener("click", () => {
-  showStep(Math.max(currentStep - 1, 0));
-});
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  if (!validateCurrentStep()) return;
-
-  formMessage.textContent =
-    "The form is ready, but submissions are not enabled yet. Connect a secure backend before accepting real applications.";
-
-  formMessage.style.color = "#175bd6";
-});
-
-showStep(0);
-```
