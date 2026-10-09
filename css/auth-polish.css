@@ -1,0 +1,162 @@
+/* Student Aid Portal - Professional Authentication Design */
+:root {
+    --auth-navy: #102a43;
+    --auth-blue: #173f65;
+    --auth-gold: #d6ad48;
+    --auth-background: #f3f6fa;
+    --auth-white: #ffffff;
+    --auth-text: #243b53;
+    --auth-muted: #627d98;
+    --auth-border: #d9e2ec;
+}
+
+html {
+    min-height: 100%;
+    background: var(--auth-background);
+}
+
+body {
+    min-height: 100vh;
+    background: var(--auth-background);
+    color: var(--auth-text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    line-height: 1.6;
+}
+
+header {
+    background: var(--auth-white);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+input,
+select,
+textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--auth-border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    background: var(--auth-white);
+    color: var(--auth-text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 3px solid rgba(214, 173, 72, 0.28);
+    border-color: var(--auth-gold);
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+a.button,
+.btn {
+    transition: background-color .2s ease, transform .2s ease;
+}
+
+button,
+input[type="submit"],
+input[type="button"],
+.btn {
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button[type="submit"],
+input[type="submit"],
+.btn-primary {
+    background: var(--auth-navy);
+    color: var(--auth-white);
+    border: 1px solid var(--auth-navy);
+    padding: 12px 20px;
+    font-weight: 700;
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.btn-primary:hover {
+    background: var(--auth-blue);
+}
+
+a {
+    color: var(--auth-blue);
+}
+
+h1,
+h2,
+h3 {
+    color: var(--auth-navy);
+    line-height: 1.25;
+}
+
+label {
+    font-weight: 600;
+}
+
+form {
+    width: 100%;
+}
+
+form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+form select,
+form textarea {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 14px;
+}
+
+.auth-card,
+.login-card,
+.signup-card,
+.auth-container,
+.login-container,
+.signup-container,
+.form-container,
+form {
+    box-sizing: border-box;
+}
+
+.auth-card,
+.login-card,
+.signup-card,
+.auth-container,
+.login-container,
+.signup-container,
+.form-container {
+    border-radius: 14px;
+}
+
+small,
+.muted,
+.subtitle {
+    color: var(--auth-muted);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--auth-navy);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    main {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button,
+    input[type="submit"] {
+        max-width: 100%;
+    }
+}
