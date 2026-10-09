@@ -1,0 +1,292 @@
+/* ==========================================
+   STUDENT AID PORTAL — PROFESSIONAL DESIGN
+   ========================================== */
+
+:root {
+  --sap-navy: #102544;
+  --sap-blue: #174ea6;
+  --sap-blue-light: #eaf2ff;
+  --sap-gold: #f4b942;
+  --sap-white: #ffffff;
+  --sap-background: #f5f8fc;
+  --sap-text: #25344a;
+  --sap-muted: #65758b;
+  --sap-border: #e0e7f0;
+  --sap-green: #13865c;
+  --sap-radius: 16px;
+  --sap-shadow: 0 10px 35px rgba(16, 37, 68, 0.09);
+}
+
+/* Global foundation */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  color: var(--sap-text);
+  background: var(--sap-background);
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+h1, h2, h3, h4 {
+  color: var(--sap-navy);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 4.1rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 750;
+}
+
+p {
+  color: var(--sap-muted);
+}
+
+/* Navigation */
+header {
+  position: relative;
+  z-index: 100;
+}
+
+nav {
+  gap: 14px;
+}
+
+nav a {
+  color: var(--sap-navy);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: var(--sap-blue);
+}
+
+/* Buttons */
+button,
+input[type="submit"],
+input[type="button"],
+.btn,
+.button,
+a.button,
+a.btn {
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              background 0.2s ease;
+}
+
+button,
+input[type="submit"],
+.btn,
+.button,
+a.button,
+a.btn {
+  cursor: pointer;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.btn:hover,
+.button:hover,
+a.button:hover,
+a.btn:hover {
+  transform: translateY(-2px);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(244, 185, 66, 0.8);
+  outline-offset: 3px;
+}
+
+/* Common action links and buttons */
+a[href="login.html"],
+a[href="signup.html"],
+a[href="application.html"] {
+  font-weight: 700;
+}
+
+/* Cards and content panels */
+.card,
+.feature-card,
+.funding-card,
+.scholarship-card,
+.resource-card,
+.dashboard-card,
+.stat-card,
+form {
+  border-radius: var(--sap-radius);
+}
+
+.card,
+.feature-card,
+.funding-card,
+.scholarship-card,
+.resource-card,
+.dashboard-card,
+.stat-card {
+  border: 1px solid var(--sap-border);
+  background: var(--sap-white);
+  box-shadow: var(--sap-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover,
+.feature-card:hover,
+.funding-card:hover,
+.scholarship-card:hover,
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(16, 37, 68, 0.13);
+}
+
+/* Forms */
+form {
+  background: var(--sap-white);
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 7px;
+  color: var(--sap-navy);
+  font-weight: 650;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+select,
+textarea {
+  max-width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  color: var(--sap-text);
+  font: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):focus,
+select:focus,
+textarea:focus {
+  border-color: var(--sap-blue);
+  box-shadow: 0 0 0 4px rgba(23, 78, 166, 0.1);
+  outline: none;
+}
+
+input[type="submit"],
+button[type="submit"] {
+  border: none;
+  border-radius: 10px;
+  background: var(--sap-blue);
+  color: white;
+  font-weight: 750;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+  background: var(--sap-navy);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  background: var(--sap-navy);
+  color: white;
+  text-align: left;
+}
+
+th, td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--sap-border);
+}
+
+tr:hover td {
+  background: #f4f7fc;
+}
+
+/* Status and message areas */
+.success,
+.success-message {
+  color: var(--sap-green);
+}
+
+.error,
+.error-message {
+  color: #b42318;
+}
+
+/* Footer */
+footer {
+  margin-top: 50px;
+}
+
+/* Mobile and tablet layout */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  nav {
+    flex-wrap: wrap;
+  }
+
+  .card,
+  .feature-card,
+  .funding-card,
+  .scholarship-card,
+  .resource-card {
+    max-width: 100%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  button,
+  input[type="submit"],
+  .btn,
+  .button {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
