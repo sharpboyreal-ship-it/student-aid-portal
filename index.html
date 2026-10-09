@@ -1,0 +1,375 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Student Aid Portal | Education Funding Resources</title>
+
+  <meta
+    name="description"
+    content="Explore scholarships, grants, education funding resources, and application tracking tools."
+  >
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="notice">
+    Independent education funding resource — not affiliated with the
+    U.S. Department of Education.
+  </div>
+
+  <header class="header">
+    <a class="logo" href="index.html">
+      <span class="logo-icon">S</span>
+      <span>Student Aid Portal</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav id="navigation">
+      <a href="#funding">Find Funding</a>
+      <a href="#resources">Resources</a>
+      <a href="#tools">Student Tools</a>
+      <a class="login-link" href="#account">Student Account</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+        <span class="eyebrow">YOUR EDUCATION. YOUR FUTURE.</span>
+
+        <h1>Make your education goals a reality.</h1>
+
+        <p>
+          Discover scholarship opportunities, explore financial aid resources,
+          and organize your education funding journey in one place.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#funding" class="button primary">Explore Funding</a>
+          <a href="#resources" class="button secondary">Learn About Aid</a>
+        </div>
+
+        <div class="hero-points">
+          <span>✓ Funding resources</span>
+          <span>✓ Application organization</span>
+          <span>✓ Student-friendly tools</span>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="card-top">
+          <span>STUDENT TOOLKIT</span>
+          <span class="card-symbol">✦</span>
+        </div>
+
+        <h2>Your next opportunity starts here.</h2>
+
+        <div class="tool-row">
+          <span class="tool-icon">🎓</span>
+          <div>
+            <strong>Scholarships</strong>
+            <p>Discover potential funding opportunities.</p>
+          </div>
+        </div>
+
+        <div class="tool-row">
+          <span class="tool-icon">📋</span>
+          <div>
+            <strong>Application Planner</strong>
+            <p>Keep track of important deadlines.</p>
+          </div>
+        </div>
+
+        <div class="tool-row">
+          <span class="tool-icon">🧮</span>
+          <div>
+            <strong>Funding Calculator</strong>
+            <p>Estimate education costs and funding gaps.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div>
+        <strong>Discover</strong>
+        <span>Funding opportunities</span>
+      </div>
+
+      <div>
+        <strong>Organize</strong>
+        <span>Your applications</span>
+      </div>
+
+      <div>
+        <strong>Prepare</strong>
+        <span>For your future</span>
+      </div>
+    </section>
+
+    <section class="section" id="funding">
+      <div class="section-heading">
+        <span class="eyebrow">EXPLORE YOUR OPTIONS</span>
+        <h2>Find education funding</h2>
+        <p>Start exploring the types of financial support available to students.</p>
+      </div>
+
+      <div class="search-box">
+        <input
+          type="search"
+          id="fundingSearch"
+          placeholder="Search scholarships, grants, or loans..."
+          aria-label="Search funding resources"
+        >
+
+        <button class="button primary" id="searchButton">Search</button>
+      </div>
+
+      <div class="funding-grid" id="fundingGrid">
+
+        <article class="funding-card" data-keywords="scholarships awards merit need">
+          <div class="funding-icon">🏆</div>
+          <h3>Scholarships</h3>
+          <p>
+            Explore awards offered by schools, foundations, charities,
+            and other organizations.
+          </p>
+          <a href="#resources">Explore resources →</a>
+        </article>
+
+        <article class="funding-card" data-keywords="grants free aid education">
+          <div class="funding-icon">🎓</div>
+          <h3>Education Grants</h3>
+          <p>
+            Learn about grant programs, eligibility requirements,
+            and application procedures.
+          </p>
+          <a href="#resources">Learn more →</a>
+        </article>
+
+        <article class="funding-card" data-keywords="student loans borrowing repayment interest">
+          <div class="funding-icon">🏦</div>
+          <h3>Student Loans</h3>
+          <p>
+            Understand borrowing costs, interest, repayment,
+            and the questions to ask before taking a loan.
+          </p>
+          <a href="#tools">Use funding tools →</a>
+        </article>
+
+        <article class="funding-card" data-keywords="international students global overseas">
+          <div class="funding-icon">🌍</div>
+          <h3>International Students</h3>
+          <p>
+            Find starting points for international scholarships
+            and education funding resources.
+          </p>
+          <a href="#resources">View resources →</a>
+        </article>
+
+      </div>
+
+      <p id="searchMessage" class="search-message" aria-live="polite"></p>
+    </section>
+
+    <section class="section resources-section" id="resources">
+      <div class="section-heading">
+        <span class="eyebrow">STUDENT RESOURCE CENTER</span>
+        <h2>Get prepared for your next step</h2>
+        <p>Use reliable information to understand your funding options.</p>
+      </div>
+
+      <div class="resource-grid">
+
+        <article class="resource-card">
+          <span>01</span>
+          <h3>Understanding Financial Aid</h3>
+          <p>
+            Learn the differences between grants, scholarships,
+            work-study programs, and loans.
+          </p>
+          <a
+            href="https://studentaid.gov/understand-aid"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit official U.S. aid resources ↗
+          </a>
+        </article>
+
+        <article class="resource-card">
+          <span>02</span>
+          <h3>FAFSA Information</h3>
+          <p>
+            Learn about the U.S. federal student aid application
+            and its eligibility requirements.
+          </p>
+          <a
+            href="https://studentaid.gov/h/apply-for-aid/fafsa"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit the official FAFSA page ↗
+          </a>
+        </article>
+
+        <article class="resource-card">
+          <span>03</span>
+          <h3>Scholarship Research</h3>
+          <p>
+            Search for awards through schools, established foundations,
+            and reputable scholarship providers.
+          </p>
+          <a
+            href="https://www.careeronestop.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explore CareerOneStop ↗
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section tools-section" id="tools">
+      <div class="section-heading">
+        <span class="eyebrow">PLAN SMARTER</span>
+        <h2>Education funding calculator</h2>
+        <p>Estimate your costs and identify the amount you still need.</p>
+      </div>
+
+      <div class="calculator">
+        <div class="calculator-form">
+          <label for="educationCost">Total education cost ($)</label>
+          <input
+            type="number"
+            id="educationCost"
+            min="0"
+            step="0.01"
+            placeholder="e.g. 20000"
+          >
+
+          <label for="availableFunding">Available funding ($)</label>
+          <input
+            type="number"
+            id="availableFunding"
+            min="0"
+            step="0.01"
+            placeholder="e.g. 8000"
+          >
+
+          <button class="button primary" id="calculateButton">
+            Calculate Funding Gap
+          </button>
+        </div>
+
+        <div class="calculator-result" aria-live="polite">
+          <span>YOUR ESTIMATED FUNDING GAP</span>
+          <strong id="fundingResult">$0.00</strong>
+          <p id="fundingExplanation">
+            Enter your estimated costs and available funding.
+          </p>
+        </div>
+      </div>
+
+      <p class="disclaimer">
+        This calculator provides estimates only. It does not determine
+        eligibility for financial aid or guarantee funding.
+      </p>
+    </section>
+
+    <section class="account-section" id="account">
+      <div>
+        <span class="eyebrow">YOUR STUDENT SPACE</span>
+        <h2>Keep your education plans organized.</h2>
+        <p>
+          Our next development stage will add student registration,
+          secure sign-in, saved opportunities, and application tracking.
+        </p>
+      </div>
+
+      <div class="account-box">
+        <h3>Student Portal</h3>
+        <p>Create an account when secure account services are enabled.</p>
+        <button class="button primary" id="accountButton" disabled>
+          Account Registration — Coming Soon
+        </button>
+        <small>
+          Account services are not active in this prototype.
+        </small>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <a class="logo footer-logo" href="index.html">
+      <span class="logo-icon">S</span>
+      <span>Student Aid Portal</span>
+    </a>
+
+    <p>
+      An independent education funding information platform.
+      Not affiliated with or endorsed by the U.S. Department of Education.
+    </p>
+
+    <p>© <span id="year"></span> Student Aid Portal.</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+``````html
+<section class="section fafsa-section" id="fafsa">
+  <div class="fafsa-card">
+    <div class="fafsa-content">
+      <span class="eyebrow">FEDERAL STUDENT AID</span>
+
+      <h2>Ready to apply for FAFSA?</h2>
+
+      <p>
+        Apply for U.S. federal student financial aid through the
+        official Federal Student Aid website.
+      </p>
+
+      <ul>
+        <li>Start your FAFSA application.</li>
+        <li>Review eligibility and application requirements.</li>
+        <li>Access your official application and submission status.</li>
+      </ul>
+
+      <a
+        class="button primary"
+        href="https://studentaid.gov/h/apply-for-aid/fafsa"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Start Official FAFSA Application ↗
+      </a>
+
+      <p class="fafsa-note">
+        FAFSA is administered by the U.S. Department of Education.
+        This independent website does not process FAFSA applications.
+      </p>
+    </div>
+  </div>
+</section>
+```
+
+

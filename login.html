@@ -1,0 +1,120 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Log In | Student Aid Portal</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .login-page {
+      min-height: 80vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 20px;
+      background: #f3f7ff;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+      padding: 35px;
+      border: 1px solid #e0e7ef;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 15px 45px rgba(16, 43, 70, 0.08);
+    }
+
+    .login-card h1 {
+      color: #102b46;
+    }
+
+    .login-card label {
+      display: block;
+      margin: 18px 0 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .login-card button {
+      width: 100%;
+      margin-top: 22px;
+    }
+
+    .login-message {
+      margin-top: 15px;
+      font-size: 13px;
+    }
+
+    .login-card .back-link {
+      display: inline-block;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="notice">
+    Independent education funding resource — not a government website.
+  </div>
+
+  <main class="login-page">
+    <section class="login-card">
+      <a class="logo" href="index.html">
+        <span class="logo-icon">S</span>
+        <span>Student Aid Portal</span>
+      </a>
+
+      <h1>Welcome back</h1>
+
+      <p>Log in to your Student Aid Portal account.</p>
+
+      <form id="loginForm">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          autocomplete="email"
+          required
+          placeholder="you@example.com"
+        >
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          autocomplete="current-password"
+          required
+          placeholder="Enter your password"
+        >
+
+        <button class="button primary" type="submit">
+          LOG IN
+        </button>
+      </form>
+
+      <p id="loginMessage" class="login-message" aria-live="polite"></p>
+
+      <a class="back-link" href="index.html">← Back to homepage</a>
+    </section>
+  </main>
+
+  <script type="module">
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("loginMessage");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      message.textContent =
+        "Account authentication is not configured yet. The next step is connecting secure authentication.";
+
+      message.style.color = "#175bd6";
+    });
+  </script>
+</body>
+</html>
+```
